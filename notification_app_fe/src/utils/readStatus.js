@@ -21,3 +21,17 @@ export const markAsRead = (id) => {
     localStorage.setItem(READ_KEY, JSON.stringify(readIds));
   }
 };
+
+export const markAllAsRead = (ids) => {
+  const readIds = getReadIds();
+  let changed = false;
+  ids.forEach(id => {
+    if (!readIds.includes(id)) {
+      readIds.push(id);
+      changed = true;
+    }
+  });
+  if (changed) {
+    localStorage.setItem(READ_KEY, JSON.stringify(readIds));
+  }
+};
