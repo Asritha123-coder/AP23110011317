@@ -20,49 +20,48 @@ The second stage brought the platform to life by building out a fully responsive
 - To strictly log all user and system interactions using a centralized logging middleware.
 
 ## 4. Architecture Design
-The architecture follows a standard client-server model. The frontend (React + Vite) acts as the presentation and logic layer, pulling data from a remote Evaluation Service API using a JWT Bearer token. 
+The architecture follows a secure client-server-proxy model. The frontend (React + Vite) acts as the presentation layer, routing API requests locally to a custom Node.js Express backend. This local backend acts as a secure proxy, attaching the JWT Bearer token natively and forwarding the requests to the remote Evaluation Service API.
 
-- **Frontend Core:** Handles UI rendering, client-side routing (`react-router-dom`), and state management.
-- **Data Normalization Layer:** Intercepts API responses via Axios interceptors and helper functions to map PascalCase API fields into standard camelCase objects.
+- **Frontend Core:** Handles UI rendering, client-side routing (`react-router-dom`), and state management, communicating exclusively with the local proxy backend.
+- **Backend Proxy:** A Node.js Express server that securely handles CORS policies and hides the authentication token from the browser.
+- **Data Normalization Layer:** Intercepts API responses via Axios to map PascalCase API fields into standard camelCase objects.
 - **Persistence Layer:** Utilizes the browser's `localStorage` to persist "Read" statuses locally without overloading the backend.
-- **Logging Middleware:** A dedicated service module that asynchronously pushes telemetry (Info, Error) to the remote server to track user interactions and API health.
+- **Logging Middleware:** A dedicated service module pushing telemetry (Info, Error) to the remote server via the secure backend proxy.
 
 ## 5. Folder Structure
 ```text
 AP23110011317/
 ├── logging_middleware/
-│   └── logger.js                 # Centralized logging service pushing logs to API
-├── notification_app_fe/
+│   └── logger.js                 # Centralized logging service
+├── notification_app_be/          # Express.js Proxy Server
+│   ├── .env                      # Environment variables (Hidden token)
+│   ├── package.json              # Backend dependencies
+│   ├── README.md                 # Backend documentation
+│   └── server.js                 # Proxy server logic and API routes
+├── notification_app_fe/          # React + Vite Frontend
 │   ├── src/
 │   │   ├── components/           # Reusable UI components
-│   │   │   ├── FilterBar.jsx
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── NotificationCard.jsx
-│   │   │   ├── NotificationCounts.jsx
-│   │   │   └── PaginationBar.jsx
 │   │   ├── pages/                # Route-level components
-│   │   │   ├── AllNotifications.jsx
-│   │   │   └── PriorityNotifications.jsx
 │   │   ├── services/             # API configuration and fetchers
-│   │   │   └── api.js
 │   │   ├── utils/                # Helper functions (LocalStorage logic)
-│   │   │   └── readStatus.js
 │   │   ├── App.jsx               # Main application routing and theme
 │   │   └── main.jsx              # React mounting point
 │   ├── package.json
 │   └── vite.config.js
-├── notification_app_be/          # Backend placeholder
+├── README.md                     # Root project instructions
 └── notification_system_design.md # System documentation (This file)
 ```
 
 ## 6. Technologies Used
 - **Frontend Framework:** React.js (Bootstrapped with Vite)
+- **Backend Framework:** Node.js with Express.js
 - **Programming Language:** JavaScript (ES6+)
 - **UI Library:** Material UI (MUI) v6
 - **Routing:** React Router DOM
 - **HTTP Client:** Axios
 - **State Management:** React Hooks (`useState`, `useEffect`, `useMemo`)
 - **Local Storage:** Browser `localStorage` API
+- **Environment:** dotenv, cors
 
 ## 7. Features Implemented
 - **Secure API Fetching:** Retrieves live notification data from the remote server utilizing JWT Bearer authentication.
