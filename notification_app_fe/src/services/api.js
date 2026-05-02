@@ -2,10 +2,7 @@ import axios from 'axios';
 import { Log, TOKEN } from '../../../logging_middleware/logger';
 
 const api = axios.create({
-  baseURL: '/api/evaluation-service',
-  headers: {
-    Authorization: `Bearer ${TOKEN}`
-  }
+  baseURL: 'http://localhost:5000/api'
 });
 
 api.interceptors.response.use(
