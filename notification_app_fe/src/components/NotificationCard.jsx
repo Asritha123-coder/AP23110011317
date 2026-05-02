@@ -12,7 +12,7 @@ const getTypeColor = (type) => {
   }
 };
 
-export default function NotificationCard({ notification, forceRead }) {
+export default function NotificationCard({ notification, forceRead, onRead }) {
   const [read, setRead] = useState(() => isRead(notification.id));
 
   useEffect(() => {
@@ -23,6 +23,7 @@ export default function NotificationCard({ notification, forceRead }) {
     if (!read) {
       markAsRead(notification.id);
       setRead(true);
+      if (onRead) onRead(notification.id);
       Log('frontend', 'INFO', 'component', `Read ${notification.id.substring(0, 8)}`);
     }
   };

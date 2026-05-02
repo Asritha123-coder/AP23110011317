@@ -9,12 +9,12 @@ export default function NotificationCounts({ notifications, readIds }) {
 
   const CountCard = ({ title, count, color }) => (
     <Grid item xs={6} sm={4} md={2.4}>
-      <Card sx={{ bgcolor: color, color: 'white', textAlign: 'center', boxShadow: 2 }}>
-        <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
-          <Typography variant="caption" display="block" fontWeight="bold" textTransform="uppercase">
+      <Card sx={{ bgcolor: color, color: 'white', textAlign: 'center', boxShadow: 3, borderRadius: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <CardContent sx={{ p: 3, '&:last-child': { pb: 3 } }}>
+          <Typography variant="subtitle2" display="block" fontWeight="bold" textTransform="uppercase" letterSpacing={1} mb={1}>
             {title}
           </Typography>
-          <Typography variant="h5" fontWeight="bold">
+          <Typography variant="h4" fontWeight="bold">
             {count}
           </Typography>
         </CardContent>
@@ -23,8 +23,8 @@ export default function NotificationCounts({ notifications, readIds }) {
   );
 
   return (
-    <Box sx={{ mb: 3 }}>
-      <Grid container spacing={2}>
+    <Box sx={{ mb: 4 }}>
+      <Grid container spacing={2} alignItems="stretch">
         <CountCard title="Total" count={total} color="#1976d2" />
         <CountCard title="Unread" count={unread} color="#d32f2f" />
         <CountCard title="Placement" count={placement} color="#2e7d32" />

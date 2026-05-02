@@ -138,7 +138,12 @@ export default function AllNotifications() {
             </Alert>
           ) : (
             filteredAndSortedNotifications.map(notif => (
-              <NotificationCard key={notif.id} notification={notif} forceRead={forceReadToggle} />
+              <NotificationCard 
+                key={notif.id} 
+                notification={notif} 
+                forceRead={forceReadToggle} 
+                onRead={() => setReadIds(getReadIds())}
+              />
             ))
           )}
 
