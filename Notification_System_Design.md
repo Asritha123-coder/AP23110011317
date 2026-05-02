@@ -110,44 +110,35 @@ To evaluate system performance and user tracking, the frontend integrates `loggi
 ## 13. Screenshots Section
 
 ### 1. Home Page - All Notifications Desktop View
-> ![Home Page - All Notifications Desktop View](./screenshots/all_notifications_desktop.png)
-> *The main dashboard displaying all campus notifications with visual category tags.*
+![alt text](image.png)
 
 ### 2. Priority Notifications Page Desktop View
-> ![Priority Notifications Page Desktop View](./screenshots/priority_notifications_desktop.png)
-> *The priority view sorting the most critical, unread placement and result updates.*
+![alt text](image-1.png)
 
 ### 3. Filter Dropdown Working
-> ![Filter Dropdown Working](./screenshots/filter_dropdown.png)
-> *The category filter restricting the view to specific notification types.*
+![alt text](image-4.png)
 
 ### 4. Search Feature Working
-> ![Search Feature Working](./screenshots/search_feature.png)
-> *Live search results filtering messages in real-time.*
+![alt text](image-3.png)
 
 ### 5. Mark All as Read Feature
-> ![Mark All as Read Feature](./screenshots/mark_all_read.png)
-> *The result of executing the bulk 'Mark All Read' action, clearing the NEW badges.*
+![alt text](image-6.png)
 
 ### 6. Mobile Responsive View
-> ![Mobile Responsive View](./screenshots/mobile_view.png)
-> *The UI elegantly wrapping on smaller viewport devices.*
+![alt text](image-7.png)
 
 ### 7. Read/Unread Badges Visible
-> ![Read/Unread Badges Visible](./screenshots/badges_visible.png)
-> *Unread notifications distinctly highlighted alongside read notifications.*
+![alt text](image-11.png)
 
 ### 8. Browser Console or Successful API Fetch
-> ![Browser Console or Successful API Fetch](./screenshots/api_fetch_success.png)
-> *Network tab showing successful 200 OK responses fetching JSON notification payloads.*
+![alt text](image-11.png)
 
 ### 9. Logger Working Screenshot
-> ![Logger Working Screenshot](./screenshots/logger_success.png)
-> *Browser console demonstrating successful telemetry payload transmissions.*
+![alt text](image-8.png)
+![alt text](image-10.png)
 
 ### 10. GitHub Repository Structure
-> ![GitHub Repository Structure](./screenshots/github_structure.png)
-> *The structured directory tree of the finalized assessment project.*
+![alt text](image-9.png)
 
 ---
 
