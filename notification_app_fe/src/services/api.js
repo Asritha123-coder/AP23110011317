@@ -1,16 +1,63 @@
-import axios from "axios";
+import axios from 'axios';
+import { Log, TOKEN } from '../../../logging_middleware/logger';
 
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiYXVkIjoiaHR0cDovLzIwLjI0NC41Ni4xNDQvZXZhbHVhdGlvbi1zZXJ2aWNlIiwiZW1haWwiOiJhc3JpdGhhX2FzaXJlZGR5QHNybWFwLmVkdS5pbiIsImV4cCI6MTc3NzcwMTI3NSwiaWF0IjoxNzc3NzAwMzc1LCJpc3MiOiJBZmZvcmQgTWVkaWNhbCBUZWNobm9sb2dpZXMgUHJpdmF0ZSBMaW1pdGVkIiwianRpIjoiNGUyM2Q3OGItYTFkZS00Y2JiLTg5OTItODc2N2U2NWY1MzQ4IiwibG9jYWxlIjoiZW4tSU4iLCJuYW1lIjoiYS5hc3JpdGhhIiwic3ViIjoiNThiMjdlOGItMzM0My00MDg4LTlkZTEtNmUyNDI4YmE4ZjVmIn0sImVtYWlsIjoiYXNyaXRoYV9hc2lyZWRkeUBzcm1hcC5lZHUuaW4iLCJuYW1lIjoiYS5hc3JpdGhhIiwicm9sbE5vIjoiYXAyMzExMDAxMTMxNyIsImFjY2Vzc0NvZGUiOiJRa2JweEgiLCJjbGllbnRJRCI6IjU4YjI3ZThiLTMzNDMtNDA4OC05ZGUxLTZlMjQyOGJhOGY1ZiIsImNsaWVudFNlY3JldCI6IlZwd0pQbW5BUUtIU3FQY2QifQ.E-LPTL-a3lzBZpdvbVJTIE-_ASMKv6gwSGH7ah1uEus";
+const api = axios.create({
+  baseURL: '/api/evaluation-service',
+  headers: {
+    Authorization: `Bearer ${TOKEN}`
+  }
+});
 
-export const fetchNotifications = async () => {
-  const response = await axios.get(
-    "/api/evaluation-service/notifications",
-    {
-      headers: {
-        Authorization: `Bearer ${TOKEN}`
-      }
+api.interceptors.response.use(
+  response => response,
+  error => {
+    Log('frontend', 'ERROR', 'api', `API Error: ${error.message}`.substring(0,48));
+    return Promise.reject(error);
+  }
+);
+
+const normalizeNotifications = (data) => {
+  if (!data) return data;
+  let arr = [];
+  if (Array.isArray(data)) arr = data;
+  else if (data.notifications) arr = data.notifications;
+  else if (data.data && Array.isArray(data.data)) arr = data.data;
+  
+  const normalized = arr.map(item => ({
+    id: item.ID || item.id,
+    type: item.Type || item.type,
+    message: item.Message || item.message,
+    timestamp: item.Timestamp || item.timestamp,
+    ...item
+  }));
+
+  if (Array.isArray(data)) return normalized;
+  if (data.notifications) return { ...data, notifications: normalized };
+  if (data.data) return { ...data, data: normalized };
+  return normalized;
+};
+
+export const getNotifications = async (page = 1, limit = 10, type = '') => {
+  try {
+    Log('frontend', 'INFO', 'api', `Fetch notifs p=${page} l=${limit} t=${type}`);
+    const params = { page, limit };
+    if (type && type !== 'All') {
+      params.type = type;
     }
-  );
+    const response = await api.get('/notifications', { params });
+    return normalizeNotifications(response.data);
+  } catch (error) {
+    throw error;
+  }
+};
 
-  return response.data.notifications;
+export const getPriorityNotifications = async () => {
+  try {
+    Log('frontend', 'INFO', 'api', 'Fetching priority notifs');
+    // Fetch a large number or all notifications to compute priority
+    const response = await api.get('/notifications', { params: { page: 1, limit: 10 } });
+    return normalizeNotifications(response.data);
+  } catch (error) {
+    throw error;
+  }
 };
