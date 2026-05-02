@@ -127,8 +127,7 @@ To evaluate system performance and user tracking, the frontend integrates `loggi
 ### 6. Mobile Responsive View
 ![alt text](image-7.png)
 
-### 7. Read/Unread Badges Visible
-![alt text](image-11.png)
+
 
 ### 8. Browser Console or Successful API Fetch
 ![alt text](image-11.png)
@@ -138,14 +137,9 @@ To evaluate system performance and user tracking, the frontend integrates `loggi
 ![alt text](image-10.png)
 
 ### 10. GitHub Repository Structure
-![alt text](image-9.png)
+![alt text](image-12.png)
 
 ---
-
-## 14. Future Improvements
-- **WebSockets / Server-Sent Events (SSE):** Transition from a pull-based REST API to a push-based WebSocket model for true real-time incoming alerts.
-- **Centralized Global State:** Migrate local component state filtering logic to Redux or Zustand for an enterprise-level architecture.
-- **Backend Persistence:** Synchronize the `localStorage` read/unread state with a user database profile so preferences persist across different browsers and devices.
 
 ## 15. Conclusion
 The Campus Notification System successfully fulfills all Stage 2 assessment requirements. By coupling an aesthetically pleasing, responsive Material UI frontend with robust client-side algorithms for filtering and priority sorting, it delivers a deeply interactive and reliable user experience. The strict adherence to logging protocols and error handling ensures it remains highly maintainable and production-ready.
